@@ -54,9 +54,7 @@
     {:name      :community-requests-to-join
      :component requests-to-join/requests-to-join-container}
     {:name      :create-community-channel
-     :component create-channel/create-channel}
-    {:name      :invite-people-community
-     :component invite/invite}]])
+     :component create-channel/create-channel}]])
 
 (defn communities []
   [communities-stack {:header-mode :none}

@@ -80,6 +80,9 @@
   [callback]
   (.addListener ^js event-emitter "keyCardOnNFCDisabled" callback))
 
+(defn set-pairings [{:keys [pairings]}]
+  (.. status-keycard (setPairings (clj->js pairings))))
+
 (defn register-card-events
   [args]
   (doseq [listener @active-listeners]
@@ -291,6 +294,8 @@
     (remove-event-listener event))
   (keycard/remove-event-listeners [this]
     (remove-event-listeners))
+  (keycard/set-pairings [this args]
+    (set-pairings args))
   (keycard/get-application-info [this args]
     (get-application-info args))
   (keycard/install-applet [this args]

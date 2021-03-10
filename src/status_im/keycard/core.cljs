@@ -11,6 +11,7 @@
             [status-im.keycard.recovery :as recovery]
             [status-im.keycard.sign :as sign]
             [status-im.keycard.wallet :as wallet]
+            [status-im.keycard.card :as card]
             [status-im.i18n.i18n :as i18n]
             [status-im.multiaccounts.recover.core :as multiaccounts.recover]
             [status-im.multiaccounts.update.core :as multiaccounts.update]
@@ -392,6 +393,7 @@
 (fx/defn on-retrieve-pairings-success
   {:events [:keycard.callback/on-retrieve-pairings-success]}
   [{:keys [db]} pairings]
+  (card/set-pairings pairings)
   {:db (assoc-in db [:keycard :pairings] pairings)})
 
 ;; When pairing to device has completed, we need to persist pairing data to
@@ -409,7 +411,7 @@
         instance-uid (get-in db [:keycard :application-info :instance-uid])
         multiaccount (common/find-multiaccount-by-keycard-instance-uid db instance-uid)
         paired-on    (utils.datetime/timestamp)
-        pairings     (assoc (get-in db [:keycard :pairings]) instance-uid {:pairing   pairing
+        pairings     (assoc (dissoc (get-in db [:keycard :pairings]) (keyword instance-uid)) instance-uid {:pairing   pairing
                                                                            :paired-on paired-on})
         next-step    (if (= setup-step :pair)
                        :begin

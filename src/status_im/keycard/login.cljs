@@ -90,6 +90,7 @@
         (get-in db [:keycard :application-info])
 
         key-uid                (get-in db [:keycard :application-info :key-uid])
+        paired?                (get-in db [:keycard :application-info :paired?])
         multiaccount           (get-in db [:multiaccounts/multiaccounts (get-in db [:multiaccounts/login :key-uid])])
         multiaccount-key-uid   (get multiaccount :key-uid)
         multiaccount-mismatch? (or (nil? multiaccount)
@@ -116,7 +117,7 @@
                 (common/hide-connection-sheet)
                 (navigation/navigate-to-cofx :keycard-wrong nil))
 
-      (empty? pairing)
+      (or (empty? pairing) (not paired?))
       (fx/merge cofx
                 (common/hide-connection-sheet)
                 (navigation/navigate-to-cofx :keycard-unpaired nil))

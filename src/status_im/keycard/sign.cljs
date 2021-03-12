@@ -14,9 +14,9 @@
   [{:keys [db] :as cofx}]
   (let [card-connected?      (get-in db [:keycard :card-connected?])
         pairing              (common/get-pairing db)
-        keycard-instance-uid (get-in db [:multiaccount :keycard-instance-uid])
-        instance-uid         (get-in db [:keycard :application-info :instance-uid])
-        keycard-match?       (= keycard-instance-uid instance-uid)
+        key-uid (get-in db [:multiaccount :key-uid])
+        keycard-key-uid      (get-in db [:keycard :application-info :key-uid])
+        keycard-match?       (= key-uid keycard-key-uid)
         hash                 (get-in db [:keycard :hash])
         data                 (get-in db [:keycard :data])
         typed?               (get-in db [:keycard :typed?])
@@ -60,9 +60,9 @@
         hash (ethereum/naked-address result)
         card-connected?                   (get-in db [:keycard :card-connected?])
         pairing                           (common/get-pairing db)
-        multiaccount-keycard-instance-uid (get-in db [:multiaccount :keycard-instance-uid])
-        instance-uid                      (get-in db [:keycard :application-info :instance-uid])
-        keycard-match?                    (= multiaccount-keycard-instance-uid instance-uid)
+        key-uid                           (get-in db [:multiaccount :key-uid])
+        keycard-key-uid                   (get-in db [:keycard :application-info :key-uid])
+        keycard-match?                    (= key-uid keycard-key-uid)
         pin                               (common/vector->string (get-in db [:keycard :pin :sign]))]
     (if (and card-connected?
              keycard-match?)

@@ -412,7 +412,7 @@
         multiaccount (common/find-multiaccount-by-keycard-instance-uid db instance-uid)
         paired-on    (utils.datetime/timestamp)
         pairings     (assoc (dissoc (get-in db [:keycard :pairings]) (keyword instance-uid)) instance-uid {:pairing   pairing
-                                                                           :paired-on paired-on})
+                                                                                                           :paired-on paired-on})
         next-step    (if (= setup-step :pair)
                        :begin
                        :card-ready)]
